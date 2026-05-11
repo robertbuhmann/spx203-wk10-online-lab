@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SPX203 Week 10 Online Lab</title>
+  <style>
+    :root {
+      --usc-blue: #003b5c;
+      --usc-teal: #007c89;
+      --usc-gold: #f5b335;
+      --ink: #1f2933;
+      --muted: #5f6b7a;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --border: #d8e1e8;
+      --good: #166534;
+      --warn: #8a5a00;
+      --soft-blue: #e8f3f8;
+      --soft-gold: #fff5dc;
+      --soft-green: #eaf7ef;
+      --shadow: 0 10px 24px rgba(0, 36, 64, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--usc-blue), var(--usc-teal));
+      color: white;
+      padding: 42px 20px 34px;
+    }
+
+    .wrap { max-width: 1120px; margin: 0 auto; }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.4fr 0.8fr;
+      gap: 26px;
+      align-items: center;
+    }
+
+    h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; margin: 0 0 14px; }
+    h2 { color: var(--usc-blue); margin-top: 0; font-size: 1.65rem; }
+    h3 { color: var(--usc-blue); margin-bottom: 8px; }
+    h4 { margin: 0 0 6px; color: var(--usc-blue); }
+    p { margin-top: 0; }
+
+    .subtitle { font-size: 1.12rem; max-width: 820px; opacity: 0.96; }
+    .hero-card {
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 22px;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-card strong { color: var(--usc-gold); }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: white;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 10px 16px;
+      align-items: center;
+    }
+
+    .nav-inner a, .button, button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: var(--soft-blue);
+      color: var(--usc-blue);
+      text-decoration: none;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+      font-size: 0.94rem;
+    }
+
+    .nav-inner a:hover, .button:hover, button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(0,0,0,0.1);
+    }
+
+    main { padding: 24px 18px 54px; }
+    section {
+      max-width: 1120px;
+      margin: 0 auto 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 26px;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+    }
+    .soft { background: var(--soft-blue); }
+    .gold { background: var(--soft-gold); }
+    .green { background: var(--soft-green); }
+
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .pill {
+      display: inline-flex;
+      border-radius: 999px;
+      background: #eef2f5;
+      padding: 7px 10px;
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .program-table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 14px; }
+    .program-table th, .program-table td { border: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; }
+    .program-table th { background: var(--usc-blue); color: white; }
+    .program-table tr:nth-child(even) td { background: #f8fafc; }
+
+    details {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      background: #fbfdff;
+    }
+    summary { cursor: pointer; font-weight: 800; color: var(--usc-blue); }
+
+    label { display: block; font-weight: 800; color: var(--usc-blue); margin: 12px 0 6px; }
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid #b8c6d1;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font: inherit;
+      background: white;
+    }
+    textarea { min-height: 92px; resize: vertical; }
+    .small-text { color: var(--muted); font-size: 0.92rem; }
+    .exercise-card { border-left: 6px solid var(--usc-teal); }
+    .case-title {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .badge {
+      background: var(--usc-gold);
+      color: #2b2200;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-weight: 800;
+      font-size: 0.86rem;
+    }
+    .video-placeholder {
+      border: 2px dashed #9db2c2;
+      border-radius: 18px;
+      padding: 16px;
+      background: #f9fbfc;
+      color: var(--muted);
+    }
+    .checklist label {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 8px 0;
+    }
+    .checklist input { width: auto; margin-top: 4px; }
+    .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+    .primary { background: var(--usc-blue); color: white; }
+    .secondary { background: var(--usc-teal); color: white; }
+    .warning { background: var(--soft-gold); color: var(--warn); }
+    .success { background: var(--soft-green); color: var(--good); }
+    .progress-bar {
+      background: #d9e3ea;
+      border-radius: 999px;
+      overflow: hidden;
+      height: 14px;
+      margin-top: 8px;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--usc-teal), var(--usc-gold));
+      transition: width 0.2s ease;
+    }
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: var(--usc-blue);
+      color: white;
+      padding: 12px 16px;
+      border-radius: 14px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.2s ease;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    footer { max-width: 1120px; margin: 0 auto; padding: 0 18px 36px; color: var(--muted); }
+    code { background: #eef2f5; padding: 2px 5px; border-radius: 6px; }
+
+    @media (max-width: 820px) {
+      .hero, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      section { padding: 20px; }
+      .nav-inner { overflow-x: auto; flex-wrap: nowrap; }
+      .nav-inner a { white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <div>
+        <h1>SPX203 Week 10 Online Lab</h1>
+        <p class="subtitle">Justifying and adapting gym-based exercise prescription for students who are unable to attend the practical class.</p>
+        <div class="pill-row">
+          <span class="pill">Exercise prescription</span>
+          <span class="pill">Evidence-informed practice</span>
+          <span class="pill">First-principles reasoning</span>
+          <span class="pill">Power training</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <p><strong>Estimated time:</strong> 90–120 minutes</p>
+        <p><strong>Submission:</strong> Complete the response boxes, generate your summary, then copy or download your answers for Canvas.</p>
+        <p><strong>Important:</strong> Your task is not to decide whether a program is simply “good” or “bad”. Your task is to justify, adapt, and explain.</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="#overview">Overview</a>
+      <a href="#case1">Case 1</a>
+      <a href="#case2">Case 2</a>
+      <a href="#adaptation">Adaptation Task</a>
+      <a href="#evidence">Evidence Helper</a>
+      <a href="#reflection">Reflection</a>
+      <a href="#submit">Final Summary</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <h2>Lab overview</h2>
+      <div class="grid-2">
+        <div>
+          <p>This online lab asks you to apply the full exercise prescription process in a practical and evidence-informed way. You will analyse two gym-based sessions, justify the selected exercises and prescription variables, and then propose appropriate alternatives that preserve the intended adaptation.</p>
+          <p>The two cases are:</p>
+          <ul>
+            <li>a sprint athlete aiming to improve lower-limb pushing power for faster starts</li>
+            <li>a generally healthy older adult aiming to improve lower-limb power for activities of daily living</li>
+          </ul>
+        </div>
+        <div class="card soft">
+          <h3>Learning objectives</h3>
+          <ul>
+            <li>Explain the intended adaptation of a gym-based exercise session.</li>
+            <li>Justify exercise selection, sets, repetitions, intensity, and rest using scientific literature.</li>
+            <li>Identify alternative resistance or plyometric exercises that preserve the intended adaptation.</li>
+            <li>Support substitutions using scientific evidence where possible.</li>
+            <li>Use first principles when direct evidence is limited.</li>
+          </ul>
+        </div>
+      </div>
+
+      <details open>
+        <summary>Important disclaimer</summary>
+        <p>You may not always find a paper that directly supports the exact exercise, set and rep scheme, or substitution you choose. Strong answers use the best relevant evidence available and then explain the applied reasoning. Consider specificity, overload, progression, movement pattern, muscle groups targeted, contraction type, force-velocity characteristics, and the functional demands of the client.</p>
+      </details>
+
+      <div class="card gold">
+        <h3>Progress checklist</h3>
+        <div class="checklist" id="progressChecklist">
+          <label><input type="checkbox" data-progress> Read the overview and learning objectives.</label>
+          <label><input type="checkbox" data-progress> Complete Case 1 justification.</label>
+          <label><input type="checkbox" data-progress> Complete Case 2 justification.</label>
+          <label><input type="checkbox" data-progress> Complete the adaptation task.</label>
+          <label><input type="checkbox" data-progress> Complete the end-of-lab reflection.</label>
+          <label><input type="checkbox" data-progress> Generate and save the final summary.</label>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <p class="small-text" id="progressText">0% complete</p>
+      </div>
+    </section>
+
+    <section id="case1">
+      <div class="case-title">
+        <h2>Case 1: Sprint athlete</h2>
+        <span class="badge">Goal: lower-limb pushing power</span>
+      </div>
+      <p>A sprint athlete has completed testing and one identified need is to improve lower-limb pushing power during the start and early acceleration phase. The athlete needs to produce high levels of force rapidly to leave the blocks faster and accelerate more effectively.</p>
+      <h3>Provided session</h3>
+      <table class="program-table" aria-label="Sprint athlete program">
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Intensity</th><th>Rest</th></tr></thead>
+        <tbody>
+          <tr><td>Trap-bar jump squat</td><td>4</td><td>4</td><td>40% trap-bar squat 1RM</td><td>2–3 min</td></tr>
+          <tr><td>Barbell hip thrust</td><td>3</td><td>5</td><td>85% 1RM</td><td>2 min</td></tr>
+          <tr><td>Rear-foot elevated split squat</td><td>3</td><td>5 each leg</td><td>85% 1RM</td><td>2 min</td></tr>
+          <tr><td>Box jump</td><td>4</td><td>3</td><td>Bodyweight</td><td>2 min</td></tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2" id="case1Cards"></div>
+    </section>
+
+    <section id="case2">
+      <div class="case-title">
+        <h2>Case 2: Older adult</h2>
+        <span class="badge">Goal: everyday lower-limb power</span>
+      </div>
+      <p>A generally healthy older adult wants to improve lower-limb power for activities of daily living, especially rising from a chair, climbing stairs, and moving more confidently during everyday tasks.</p>
+      <h3>Provided session</h3>
+      <table class="program-table" aria-label="Older adult program">
+        <thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Intensity</th><th>Rest</th></tr></thead>
+        <tbody>
+          <tr><td>Sit-to-stand</td><td>3</td><td>6</td><td>Bodyweight, fast concentric action</td><td>90 s</td></tr>
+          <tr><td>Leg press</td><td>3</td><td>6</td><td>40% 1RM, fast concentric action</td><td>90 s</td></tr>
+          <tr><td>Dumbbell step-ups</td><td>3</td><td>6 each leg</td><td>75% 1RM</td><td>90 s</td></tr>
+          <tr><td>Machine calf raises</td><td>3</td><td>8</td><td>75% 1RM</td><td>60 s</td></tr>
+        </tbody>
+      </table>
+
+      <div class="grid-2" id="case2Cards"></div>
+    </section>
+
+    <section id="adaptation">
+      <h2>Activity 2: Performing, observing, and adapting the session</h2>
+      <p>Because this is an online replacement for the practical class, you may complete this section by observing demonstrations, using prior practical experience, or safely performing suitable exercises if you have access to appropriate equipment and supervision. Do not attempt exercises that are unsafe for your setting.</p>
+      <div class="video-placeholder">
+        <h3>Optional video/demo area</h3>
+        <p>Replace this box with embedded Canvas Studio, YouTube, Vimeo, or Panopto demonstration videos if available. Suggested demos: trap-bar jump squat, hip thrust, split squat, box jump, sit-to-stand, leg press, step-up, calf raise.</p>
+      </div>
+      <div class="grid-2" id="adaptCards"></div>
+    </section>
+
+    <section id="evidence">
+      <h2>Evidence helper</h2>
+      <div class="grid-3">
+        <div class="card soft">
+          <h3>Useful search terms</h3>
+          <ul>
+            <li><code>power training older adults physical function</code></li>
+            <li><code>jump squat sprint performance acceleration</code></li>
+            <li><code>hip thrust sprint acceleration</code></li>
+            <li><code>plyometric training sprint start</code></li>
+            <li><code>resistance training power older adults fast concentric</code></li>
+          </ul>
+        </div>
+        <div class="card green">
+          <h3>What counts as evidence?</h3>
+          <ul>
+            <li>Systematic reviews and meta-analyses</li>
+            <li>Randomised controlled trials</li>
+            <li>Biomechanical studies of muscle forces or movement demands</li>
+            <li>Training studies in similar populations</li>
+            <li>Guidelines from reputable professional bodies</li>
+          </ul>
+        </div>
+        <div class="card gold">
+          <h3>When evidence is limited</h3>
+          <p>Use first principles. Explain how your decision is supported by movement pattern, muscle groups, force and velocity demands, contraction type, stability demands, unilateral/bilateral demands, functional transfer, and the client’s goal.</p>
+        </div>
+      </div>
+
+      <details>
+        <summary>Example of stronger reasoning</summary>
+        <p><strong>Weak:</strong> “I chose a goblet squat because it is easier.”</p>
+        <p><strong>Stronger:</strong> “I chose a goblet squat as a regression for the older adult because it preserves the sit-to-stand/squat movement pattern, targets the hip and knee extensors, and reduces technical and loading demands compared with a heavier bilateral squat. I would adjust the load so the concentric phase can still be performed quickly and safely.”</p>
+      </details>
+    </section>
+
+    <section id="reflection">
+      <h2>End-of-lab reflection</h2>
+      <div class="grid-2">
+        <div class="card">
+          <label for="reflection1">Which session was easier to justify using scientific evidence? Why?</label>
+          <textarea id="reflection1" data-save></textarea>
+          <label for="reflection2">Did you find stronger evidence for exercise selection or exact prescription variables?</label>
+          <textarea id="reflection2" data-save></textarea>
+          <label for="reflection3">Which substitution decision was easiest to justify?</label>
+          <textarea id="reflection3" data-save></textarea>
+        </div>
+        <div class="card">
+          <label for="reflection4">Which substitution decision was hardest to justify?</label>
+          <textarea id="reflection4" data-save></textarea>
+          <label for="reflection5">When direct evidence is limited, what makes a rationale strong?</label>
+          <textarea id="reflection5" data-save></textarea>
+          <label for="reflection6">What did this lab teach you about copying exercises versus true exercise prescription?</label>
+          <textarea id="reflection6" data-save></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section id="submit">
+      <h2>Final summary</h2>
+      <p>When you have completed the lab, generate your response summary. Review it, then copy or download it for submission according to your tutor’s instructions.</p>
+      <div class="actions">
+        <button class="primary" onclick="generateSummary()">Generate summary</button>
+        <button class="secondary" onclick="copySummary()">Copy summary</button>
+        <button onclick="downloadSummary()">Download .txt file</button>
+        <button class="warning" onclick="clearSavedAnswers()">Clear saved answers</button>
+      </div>
+      <label for="summaryOutput">Generated response summary</label>
+      <textarea id="summaryOutput" style="min-height: 360px;" placeholder="Your generated summary will appear here."></textarea>
+    </section>
+  </main>
+
+  <footer>
+    <p>SPX203 online lab. This app stores responses locally in the student’s browser only. Responses are not sent to a server.</p>
+  </footer>
+
+  <div class="toast" id="toast">Saved</div>
+
+  <script>
+    const case1Exercises = [
+      { key: 'c1_trap_bar_jump_squat', name: 'Trap-bar jump squat', prompt: 'Consider why an explosive low-repetition loaded jump may be appropriate for acceleration and lower-limb power.' },
+      { key: 'c1_hip_thrust', name: 'Barbell hip thrust', prompt: 'Consider hip extensor contribution, horizontal force production, and heavy loading.' },
+      { key: 'c1_split_squat', name: 'Rear-foot elevated split squat', prompt: 'Consider unilateral force production, hip/knee extensor strength, and limb-specific demands.' },
+      { key: 'c1_box_jump', name: 'Box jump', prompt: 'Consider explosive concentric intent, jump mechanics, and low fatigue technical quality.' }
+    ];
+
+    const case2Exercises = [
+      { key: 'c2_sit_to_stand', name: 'Sit-to-stand', prompt: 'Consider transfer to activities of daily living and fast concentric intent.' },
+      { key: 'c2_leg_press', name: 'Leg press', prompt: 'Consider safe lower-limb power development with reduced balance demands.' },
+      { key: 'c2_step_up', name: 'Dumbbell step-up', prompt: 'Consider stair climbing transfer, unilateral strength, and functional movement demands.' },
+      { key: 'c2_calf_raise', name: 'Machine calf raise', prompt: 'Consider ankle plantarflexor contribution to gait, stairs, balance, and propulsion.' }
+    ];
+
+    const adaptationExercises = [
+      ...case1Exercises.map(e => ({...e, caseName: 'Sprint athlete'})),
+      ...case2Exercises.map(e => ({...e, caseName: 'Older adult'}))
+    ];
+
+    function exerciseJustificationCard(ex) {
+      return `
+        <div class="card exercise-card">
+          <h3>${ex.name}</h3>
+          <p class="small-text">${ex.prompt}</p>
+          <label for="${ex.key}_target">What is this exercise targeting?</label>
+          <textarea id="${ex.key}_target" data-save></textarea>
+          <label for="${ex.key}_appropriate">Why is it appropriate for this client and goal?</label>
+          <textarea id="${ex.key}_appropriate" data-save></textarea>
+          <label for="${ex.key}_prescription">How would you justify the sets, reps, intensity, rest, and sequencing?</label>
+          <textarea id="${ex.key}_prescription" data-save></textarea>
+          <label for="${ex.key}_evidence">Evidence or first-principles justification</label>
+          <textarea id="${ex.key}_evidence" data-save placeholder="Include author/year or brief source details where possible."></textarea>
+        </div>`;
+    }
+
+    function adaptationCard(ex) {
+      return `
+        <div class="card exercise-card">
+          <h3>${ex.caseName}: ${ex.name}</h3>
+          <label for="${ex.key}_original_goal">What was the original exercise designed to achieve?</label>
+          <textarea id="${ex.key}_original_goal" data-save></textarea>
+          <label for="${ex.key}_alternative">Alternative exercise</label>
+          <input id="${ex.key}_alternative" data-save placeholder="e.g., goblet squat, kettlebell swing, seated calf raise" />
+          <label for="${ex.key}_category">Is this an equivalent, regression, or progression?</label>
+          <select id="${ex.key}_category" data-save>
+            <option value="">Select one</option>
+            <option>Equivalent</option>
+            <option>Regression</option>
+            <option>Progression</option>
+          </select>
+          <label for="${ex.key}_modify">Would you keep or modify the original prescription? Why?</label>
+          <textarea id="${ex.key}_modify" data-save></textarea>
+          <label for="${ex.key}_adapt_justify">Evidence or first-principles justification</label>
+          <textarea id="${ex.key}_adapt_justify" data-save></textarea>
+        </div>`;
+    }
+
+    document.getElementById('case1Cards').innerHTML = case1Exercises.map(exerciseJustificationCard).join('');
+    document.getElementById('case2Cards').innerHTML = case2Exercises.map(exerciseJustificationCard).join('');
+    document.getElementById('adaptCards').innerHTML = adaptationExercises.map(adaptationCard).join('');
+
+    function showToast(message = 'Saved') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1300);
+    }
+
+    function saveField(e) {
+      const el = e.target;
+      if (!el.id) return;
+      localStorage.setItem('spx203_week10_' + el.id, el.value);
+    }
+
+    function restoreAnswers() {
+      document.querySelectorAll('[data-save]').forEach(el => {
+        const value = localStorage.getItem('spx203_week10_' + el.id);
+        if (value !== null) el.value = value;
+        el.addEventListener('input', saveField);
+        el.addEventListener('change', saveField);
+      });
+    }
+
+    function updateProgress() {
+      const boxes = Array.from(document.querySelectorAll('[data-progress]'));
+      const checked = boxes.filter(b => b.checked).length;
+      const pct = boxes.length ? Math.round((checked / boxes.length) * 100) : 0;
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('progressText').textContent = pct + '% complete';
+      boxes.forEach((b, i) => localStorage.setItem('spx203_week10_progress_' + i, b.checked ? '1' : '0'));
+    }
+
+    function restoreProgress() {
+      document.querySelectorAll('[data-progress]').forEach((box, i) => {
+        box.checked = localStorage.getItem('spx203_week10_progress_' + i) === '1';
+        box.addEventListener('change', updateProgress);
+      });
+      updateProgress();
+    }
+
+    function val(id) {
+      const el = document.getElementById(id);
+      return el ? (el.value || '').trim() : '';
+    }
+
+    function sectionForExercise(ex) {
+      return `${ex.name}\n- Target: ${val(ex.key + '_target')}\n- Why appropriate: ${val(ex.key + '_appropriate')}\n- Prescription justification: ${val(ex.key + '_prescription')}\n- Evidence / first-principles justification: ${val(ex.key + '_evidence')}`;
+    }
+
+    function adaptationForExercise(ex) {
+      return `${ex.caseName}: ${ex.name}\n- Original purpose: ${val(ex.key + '_original_goal')}\n- Alternative: ${val(ex.key + '_alternative')}\n- Equivalent/regression/progression: ${val(ex.key + '_category')}\n- Prescription decision: ${val(ex.key + '_modify')}\n- Evidence / first-principles justification: ${val(ex.key + '_adapt_justify')}`;
+    }
+
+    function generateSummary() {
+      const summary = `SPX203 Week 10 Online Lab Response\nJustifying and Adapting Gym-Based Exercise Prescription\n\n==============================\nCASE 1: SPRINT ATHLETE\n==============================\n${case1Exercises.map(sectionForExercise).join('\n\n')}\n\n==============================\nCASE 2: OLDER ADULT\n==============================\n${case2Exercises.map(sectionForExercise).join('\n\n')}\n\n==============================\nACTIVITY 2: EXERCISE ADAPTATIONS\n==============================\n${adaptationExercises.map(adaptationForExercise).join('\n\n')}\n\n==============================\nEND-OF-LAB REFLECTION\n==============================\n1. Which session was easier to justify using scientific evidence? Why?\n${val('reflection1')}\n\n2. Did you find stronger evidence for exercise selection or exact prescription variables?\n${val('reflection2')}\n\n3. Which substitution decision was easiest to justify?\n${val('reflection3')}\n\n4. Which substitution decision was hardest to justify?\n${val('reflection4')}\n\n5. When direct evidence is limited, what makes a rationale strong?\n${val('reflection5')}\n\n6. What did this lab teach you about copying exercises versus true exercise prescription?\n${val('reflection6')}\n`;
+      document.getElementById('summaryOutput').value = summary;
+      localStorage.setItem('spx203_week10_summaryOutput', summary);
+      showToast('Summary generated');
+    }
+
+    async function copySummary() {
+      const text = document.getElementById('summaryOutput').value;
+      if (!text.trim()) generateSummary();
+      try {
+        await navigator.clipboard.writeText(document.getElementById('summaryOutput').value);
+        showToast('Summary copied');
+      } catch (err) {
+        document.getElementById('summaryOutput').select();
+        document.execCommand('copy');
+        showToast('Summary copied');
+      }
+    }
+
+    function downloadSummary() {
+      if (!document.getElementById('summaryOutput').value.trim()) generateSummary();
+      const blob = new Blob([document.getElementById('summaryOutput').value], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'SPX203_Week10_online_lab_response.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Download started');
+    }
+
+    function clearSavedAnswers() {
+      const ok = confirm('This will clear all saved answers in this browser. Continue?');
+      if (!ok) return;
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('spx203_week10_')) localStorage.removeItem(key);
+      });
+      document.querySelectorAll('textarea, input:not([type="checkbox"]), select').forEach(el => el.value = '');
+      document.querySelectorAll('[data-progress]').forEach(box => box.checked = false);
+      updateProgress();
+      showToast('Answers cleared');
+    }
+
+    restoreAnswers();
+    restoreProgress();
+  </script>
+</body>
+</html>
