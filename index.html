@@ -175,12 +175,24 @@
       font-weight: 800;
       font-size: 0.86rem;
     }
-    .video-placeholder {
-      border: 2px dashed #9db2c2;
-      border-radius: 18px;
-      padding: 16px;
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+    .video-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px;
       background: #f9fbfc;
-      color: var(--muted);
+    }
+    .video-frame {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border: 0;
+      border-radius: 10px;
+      background: #dfe8ef;
     }
     .checklist label {
       display: flex;
@@ -232,6 +244,7 @@
       section { padding: 20px; }
       .nav-inner { overflow-x: auto; flex-wrap: nowrap; }
       .nav-inner a { white-space: nowrap; }
+      .video-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -304,8 +317,8 @@
           <label><input type="checkbox" data-progress> Complete Case 1 justification.</label>
           <label><input type="checkbox" data-progress> Complete Case 2 justification.</label>
           <label><input type="checkbox" data-progress> Complete the adaptation task.</label>
-          <label><input type="checkbox" data-progress> Complete the end-of-lab reflection.</label>
-          <label><input type="checkbox" data-progress> Generate and save the final summary.</label>
+          <label><input type="checkbox" data-progress> Complete the end-of-lab reflection (optional).</label>
+          <label><input type="checkbox" data-progress> Generate and save the final summary (.txt is for your records only; you do not need to submit it).</label>
         </div>
         <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
         <p class="small-text" id="progressText">0% complete</p>
@@ -355,9 +368,41 @@
     <section id="adaptation">
       <h2>Activity 2: Performing, observing, and adapting the session</h2>
       <p>Because this is an online replacement for the practical class, you may complete this section by observing demonstrations, using prior practical experience, or safely performing suitable exercises if you have access to appropriate equipment and supervision. Do not attempt exercises that are unsafe for your setting.</p>
-      <div class="video-placeholder">
-        <h3>Optional video/demo area</h3>
-        <p>Replace this box with embedded Canvas Studio, YouTube, Vimeo, or Panopto demonstration videos if available. Suggested demos: trap-bar jump squat, hip thrust, split squat, box jump, sit-to-stand, leg press, step-up, calf raise.</p>
+      <h3>Exercise demonstration videos</h3>
+      <p>Use these embedded videos as movement references while completing the lab activities.</p>
+      <div class="video-grid">
+        <div class="video-card">
+          <h4>Trap Bar Jump Squat</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/rFHit0RwK3U" title="Trap Bar Jump Squat demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-card">
+          <h4>Barbell Hip Thrust</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/5S8SApGU_Lk" title="Barbell Hip Thrust demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-card">
+          <h4>Rear Foot Elevated Split Squat</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/8kvZmrlOo2M" title="Rear Foot Elevated Split Squat demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-card">
+          <h4>Box Jump</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/k7dmYdknbac" title="Box Jump demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-card">
+          <h4>Sit to Stand</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/Dg20pIkkzh8" title="Sit to Stand demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-card">
+          <h4>Leg Press</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/aY8ifPrSQQI" title="Leg Press demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-card">
+          <h4>Dumbbell Step Up</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/Zp7RG4jFScw" title="Dumbbell Step Up demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
+        <div class="video-card">
+          <h4>Machine Calf Raise</h4>
+          <iframe class="video-frame" src="https://www.youtube.com/embed/DvEnixpoSg0" title="Machine Calf Raise demonstration video" loading="lazy" allowfullscreen></iframe>
+        </div>
       </div>
       <div class="grid-2" id="adaptCards"></div>
     </section>
@@ -399,7 +444,8 @@
     </section>
 
     <section id="reflection">
-      <h2>End-of-lab reflection</h2>
+      <h2>End-of-lab reflection (optional)</h2>
+      <p class="small-text">This reflection is optional and can be used to consolidate your thinking after completing the main activities.</p>
       <div class="grid-2">
         <div class="card">
           <label for="reflection1">Which session was easier to justify using scientific evidence? Why?</label>
@@ -422,7 +468,7 @@
 
     <section id="submit">
       <h2>Final summary</h2>
-      <p>When you have completed the lab, generate your response summary. Review it, then copy or download it for submission according to your tutor’s instructions.</p>
+      <p>When you have completed the lab, generate your response summary. The downloaded <code>.txt</code> file is for your own records (you do not need to submit it).</p>
       <div class="actions">
         <button class="primary" onclick="generateSummary()">Generate summary</button>
         <button class="secondary" onclick="copySummary()">Copy summary</button>
